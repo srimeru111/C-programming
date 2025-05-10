@@ -1,0 +1,47 @@
+1.Selection Sort 
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+void Sort(int a[],int n){
+    int i,j;
+    for(i=0;i<n-1;i++){
+        int max_index=i;
+        for(j=i+1;j<n;j++){
+            if(a[j]<a[max_index]){
+                max_index=j;
+            }
+        }
+            int temp=a[max_index];
+            a[max_index]=a[i];
+            a[i]=temp;
+    }
+    
+}
+int main(){
+    int n;
+    printf("enter number of elements:");
+    scanf("%d",&n);
+    int a[n];
+    printf("enter elements :");
+    int i;
+    for(i=0;i<n;i++){
+       a[i]=rand();
+    }
+    printf("elements before sorting:");
+    for(i=0;i<n;i++){
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+    clock_t start, end;
+    double Cpu_time;
+    start=clock();
+    Sort(a,n);
+    end=clock();
+    printf("elements after sorting:");
+    for(i=0;i<n;i++){
+        printf("%d ",a[i]);
+    }
+    printf("\n");
+    Cpu_time=(double)(end-start)/CLOCKS_PER_SEC;
+    printf("cpu time used:%.2f",Cpu_time);
+}
