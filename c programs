@@ -45,3 +45,63 @@ int main(){
     Cpu_time=(double)(end-start)/CLOCKS_PER_SEC;
     printf("cpu time used:%.2f",Cpu_time);
 }
+2.Quick Sort
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int partition(int a[], int low, int high){
+    int pivot = a[low];
+    int i = low, j = high, temp;
+
+    while(i < j){
+        while (a[i] <= pivot && i < high) i++;
+        while (a[j] > pivot) j--;
+        if(i < j){
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+    }
+    temp = a[low];
+    a[low] = a[j];
+    a[j] = temp;
+
+    return j;
+}
+
+void quick(int a[], int low, int high){
+    if(low < high){
+        int j = partition(a, low, high);
+        quick(a, low, j - 1);
+        quick(a, j + 1, high);
+    }
+}
+
+int main(){
+    int n;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    int a[n];
+
+    srand(time(NULL));
+    for(int i = 0; i < n; i++)
+        a[i] = rand() % 100;
+
+    printf("\nBefore sorting:\n");
+    for(int i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
+    clock_t start = clock();
+    quick(a, 0, n - 1);
+    clock_t end = clock();
+
+    printf("\nAfter sorting:\n");
+    for(int i = 0; i < n; i++)
+        printf("%d ", a[i]);
+
+    double cpu_time_used = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("\nCPU time used: %.2f seconds\n", cpu_time_used);
+
+    return 0;
+}
